@@ -4,4 +4,4 @@ This repository contains the assignments for OpenCamp.
 ## Week 2
 - [Review of Technical design document](week02_poc/review.md)
 - [hacky POC](week02_poc/README.md)
-  - `week02_poc`
+  - `week02_poc` folder contains the PoC
