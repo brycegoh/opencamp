@@ -5,7 +5,9 @@ import { PORT } from './config.js';
 import { actor, inbox, outbox, webfinger } from './routes/index.js';
 
 const app = express();
-app.use(express.json());
+app.use(express.json({
+  type: ['application/json', 'application/activity+json']
+}));
 
 // heartbeat
 app.get('/', (req, res) => {

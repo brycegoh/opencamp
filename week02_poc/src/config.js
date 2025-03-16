@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Domain and URLs
-const DOMAIN = "b0d3-2406-3003-2000-76e4-b8a2-ff0d-a2ee-3e30.ngrok-free.app";
+const DOMAIN = "7904-2406-3003-2000-76e4-d114-3c61-6184-3df4.ngrok-free.app";
 const ACTOR_URL = `https://${DOMAIN}/actor`;
 
 // Load keys
