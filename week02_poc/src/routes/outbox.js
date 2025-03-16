@@ -7,34 +7,46 @@ const router = express.Router();
 
 // GET Outbox - Returns collection of activities
 router.get('/', (req, res) => {
+  console.log("Outbox GET request:", {
+    headers: req.headers,
+    query: req.query
+  });
+  
   const outboxItems = getOutboxItems();
   
-  if (req.query.page === "1") {
-    console.log("Outbox requested page 1", outboxItems);
-    // Return the first page of posts
+  if (req.query.page === "true") {
+    console.log("Outbox requested page, returning", outboxItems.length, "items");
+    // Return the page of posts
     res.setHeader("Content-Type", "application/activity+json");
-    return res.json({
+    
+    const response = {
       "@context": "https://www.w3.org/ns/activitystreams",
-      "id": `https://${DOMAIN}/outbox?page=1`,
+      "id": `https://${DOMAIN}/outbox?page=true`,
       "type": "OrderedCollectionPage",
       "partOf": `https://${DOMAIN}/outbox`,
       "orderedItems": outboxItems
-    });
+    };
+    
+    console.log("Sending response for page:", JSON.stringify(response, null, 2));
+    return res.json(response);
   }
 
   // Return the outbox collection metadata
-  console.log("Outbox collection requested");
-  res.setHeader("Content-Type", "application/activity+json");
-  res.json({
+  console.log("Outbox collection requested, total items:", outboxItems.length);
+  
+  const response = {
     "@context": "https://www.w3.org/ns/activitystreams",
     "id": `https://${DOMAIN}/outbox`,
     "type": "OrderedCollection",
     "totalItems": outboxItems.length,
-    "first": {
-      "id": `https://${DOMAIN}/outbox?page=1`,
-      "type": "OrderedCollectionPage"
-    }
-  });
+    "first": `https://${DOMAIN}/outbox?page=true`,
+    "last": `https://${DOMAIN}/outbox?min_id=0&page=true`
+  };
+  
+  console.log("Sending outbox collection response:", JSON.stringify(response, null, 2));
+  
+  res.setHeader("Content-Type", "application/activity+json");
+  res.json(response);
 });
 
 // POST to Outbox - Creates and stores a new activity
