@@ -1,0 +1,1 @@
+cat dbinit.sql | cockroach sql --url $DB_URL
