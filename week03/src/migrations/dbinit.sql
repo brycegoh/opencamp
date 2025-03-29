@@ -105,7 +105,8 @@ CREATE TABLE IF NOT EXISTS outbox (
   to_recipients TEXT[],
   cc_recipients TEXT[],
   raw_data JSONB NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  processed BOOLEAN DEFAULT FALSE
 );
 
 -- Create indexes for performance - optimized for CockroachDB

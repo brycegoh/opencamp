@@ -1,5 +1,5 @@
 import pool from '../db/client';
-import { User, NewUser, Actor } from './types';
+import { User, NewUser, Actor } from './dataSchema';
 
 /**
  * Find a user by username

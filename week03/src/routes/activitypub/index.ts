@@ -1,4 +1,4 @@
-import activityPubRouter from './activitypub';
+import activityPubRouter from './routeHandlers';
 import webfingerRouter from '../webfinger';
 
 export {

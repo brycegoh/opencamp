@@ -1,6 +1,6 @@
 import request from 'supertest';
 import express from 'express';
-import activitypubRoutes from '../routes/activitypub/activitypub';
+import activitypubRoutes from '../routes/activitypub/routeHandlers';
 import pool from '../db/client';
 import { v4 as uuid } from 'uuid';
 

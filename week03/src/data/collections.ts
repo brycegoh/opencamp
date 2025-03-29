@@ -5,7 +5,7 @@ import {
   Outbox, 
   NewOutbox, 
   Follower 
-} from './types';
+} from './dataSchema';
 
 //
 // Outbox operations

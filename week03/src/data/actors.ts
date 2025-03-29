@@ -1,5 +1,5 @@
 import pool from '../db/client';
-import { Actor, NewActor } from './types';
+import { Actor, NewActor } from './dataSchema';
 
 //
 // Database operations

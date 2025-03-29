@@ -1,4 +1,4 @@
-import { Actor } from './types';
+import { Actor } from './dataSchema';
 import { ActivityPubNote } from './check-ins';
 
 /**

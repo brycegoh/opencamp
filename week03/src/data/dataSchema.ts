@@ -125,6 +125,7 @@ export interface Outbox {
   cc_recipients?: string[]; // JSONB array of CC recipient URLs
   raw_data: Record<string, any>; // JSONB
   created_at: Date;
+  processed: boolean;
 }
 
 /**

@@ -3,7 +3,7 @@ import express from 'express';
 const PORT = 3000;
 
 // Import routes
-import activitypubRoutes from './routes/activitypub/activitypub';
+import activitypubRoutes from './routes/activitypub/routeHandlers';
 import { webfingerRouter } from './routes/activitypub';
 
 const app = express();

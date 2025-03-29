@@ -1,5 +1,5 @@
 import pool from '../db/client';
-import { Place, NewPlace } from './types';
+import { Place, NewPlace } from './dataSchema';
 
 /**
  * Find or create a place

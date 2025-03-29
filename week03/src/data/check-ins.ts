@@ -6,7 +6,7 @@ import {
   NewMedia,
   Actor,
   Place 
-} from './types';
+} from './dataSchema';
 import { placeToJsonLd } from './places';
 
 // Type definition for ActivityPub Note object

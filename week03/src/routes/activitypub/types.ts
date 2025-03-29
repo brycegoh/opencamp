@@ -33,7 +33,7 @@ export interface Attachment {
 }
 
 export interface Activity {
-  id?: string;
+  id: string;
   type: string;
   actor: string;
   object: ActivityObject | string;
