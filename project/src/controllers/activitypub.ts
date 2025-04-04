@@ -95,8 +95,8 @@ export const handleInbox = async (req: Request, res: Response) => {
     const inboxItem = await db.addInboxItem(user.id, activity);
     console.log(`Created inbox item with ID: ${inboxItem.id}`);
     
-    // Process via RabbitMQ - include the database row ID
-    await rabbitmq.publishToInbox(user.id, activity, inboxItem.id);
+    // Process via RabbitMQ - only pass the database row ID
+    await rabbitmq.publishToInbox(user.id, inboxItem.id);
     
     res.status(202).json({ status: 'Accepted' });
   } catch (error) {
@@ -173,8 +173,8 @@ export const postToOutbox = async (req: Request, res: Response) => {
     const outboxItem = await db.addOutboxItem(user.id, activity);
     console.log(`Created outbox item with ID: ${outboxItem.id}`);
     
-    // Process via RabbitMQ - include the database row ID
-    await rabbitmq.publishToOutbox(user.id, activity, outboxItem.id);
+    // Process via RabbitMQ - only pass the database row ID
+    await rabbitmq.publishToOutbox(user.id, outboxItem.id);
     
     res.status(202).json({ status: 'Accepted' });
   } catch (error) {

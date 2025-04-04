@@ -13,21 +13,21 @@ export async function connectRabbitMQ() {
 }
 
 // Publish message to inbox processing queue
-export async function publishToInbox(userId: string, activity: Activity, inboxItemId: string) {
+export async function publishToInbox(userId: string, inboxItemId: string) {
   const channel = await rabbitmq.getChannel();
   await channel.sendToQueue(
     rabbitmq.INBOX_QUEUE,
-    Buffer.from(JSON.stringify({ userId, activity, inboxItemId })),
+    Buffer.from(JSON.stringify({ userId, inboxItemId })),
     { persistent: true }
   );
 }
 
 // Publish message to outbox processing queue
-export async function publishToOutbox(userId: string, activity: Activity, outboxItemId: string) {
+export async function publishToOutbox(userId: string, outboxItemId: string) {
   const channel = await rabbitmq.getChannel();
   await channel.sendToQueue(
     rabbitmq.OUTBOX_QUEUE,
-    Buffer.from(JSON.stringify({ userId, activity, outboxItemId })),
+    Buffer.from(JSON.stringify({ userId, outboxItemId })),
     { persistent: true }
   );
 }
@@ -42,7 +42,18 @@ export async function startInboxConsumer() {
     
     try {
       const data = JSON.parse(msg.content.toString());
-      const { userId, activity, inboxItemId } = data;
+      const { userId, inboxItemId } = data;
+      
+      // Retrieve the activity from the database
+      const inboxItem = await db.getInboxItemById(inboxItemId);
+      if (!inboxItem) {
+        console.error(`Inbox item with ID ${inboxItemId} not found`);
+        channel.ack(msg); // Acknowledge to prevent requeuing
+        return;
+      }
+      
+      // Parse the activity from the JSON stored in the database
+      const activity = inboxItem.activity
       
       console.log('Processing inbox activity:', activity.type);
       console.log('Inbox item ID:', inboxItemId);
@@ -95,7 +106,18 @@ export async function startOutboxConsumer() {
     if (!msg) return;
     
     try {
-      const { userId, activity, outboxItemId } = JSON.parse(msg.content.toString());
+      const { userId, outboxItemId } = JSON.parse(msg.content.toString());
+      
+      // Retrieve the activity from the database
+      const outboxItem = await db.getOutboxItemById(outboxItemId);
+      if (!outboxItem) {
+        console.error(`Outbox item with ID ${outboxItemId} not found`);
+        channel.ack(msg); // Acknowledge to prevent requeuing
+        return;
+      }
+      
+      // Parse the activity from the JSON stored in the database
+      const activity = outboxItem.activity
       
       console.log('Processing outbox activity:', activity.type);
       console.log('Outbox item ID:', outboxItemId);
@@ -214,7 +236,7 @@ async function handleFollowActivity(activity: FollowActivity) {
   const outboxItem = await db.addOutboxItem(user.id, acceptActivity);
   
   // Process immediately
-  await publishToOutbox(user.id, acceptActivity, outboxItem.id);
+  await publishToOutbox(user.id, outboxItem.id);
 }
 
 async function handleAcceptActivity(activity: Activity) {

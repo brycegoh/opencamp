@@ -179,6 +179,26 @@ export const markOutboxItemProcessed = async (id: string) => {
   );
 };
 
+// Get inbox item by ID
+export const getInboxItemById = async (id: string) => {
+  const result = await pool.query(
+    'SELECT * FROM inbox_items WHERE id = $1',
+    [id]
+  );
+  
+  return result.rows[0] || null;
+};
+
+// Get outbox item by ID
+export const getOutboxItemById = async (id: string) => {
+  const result = await pool.query(
+    'SELECT * FROM outbox_items WHERE id = $1',
+    [id]
+  );
+  
+  return result.rows[0] || null;
+};
+
 // Followers/Following methods
 export const addFollower = async (userId: string, followerActorId: string, accepted = true) => {
   try {

@@ -49,7 +49,7 @@ export const createCheckin = async (req: Request, res: Response) => {
     const outboxItem = await db.addOutboxItem(userId, createActivity);
     
     // Process in background via RabbitMQ
-    await rabbitmq.publishToOutbox(userId, createActivity, outboxItem.id);
+    await rabbitmq.publishToOutbox(userId, outboxItem.id);
     
     res.status(201).json(checkin);
   } catch (error) {
