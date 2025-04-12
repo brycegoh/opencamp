@@ -96,7 +96,7 @@ npm run k6-outbox
 
 ## Automated Test Comparison
 
-We've created a script that runs both tests and automatically compares the results. This helps identify performance differences between inbox and outbox processing, which is crucial for balanced federation performance.
+Runs both tests and automatically compares the results. This helps identify performance differences between inbox and outbox processing, which is crucial for balanced federation performance.
 
 ### How the Comparison Script Works
 
@@ -132,13 +132,3 @@ The comparison focuses on three key metrics for ActivityPub federation:
 3. **Throughput**: Measures the sustainable request rate for each endpoint
 
 A JSON report is also saved to the `results` directory for historical tracking.
-
-## Key ActivityPub Test Considerations
-
-When testing ActivityPub federation, remember that:
-
-1. Activities must include proper structure with `@context`, `id`, `actor`, and `object` fields
-2. Follow/Unfollow activities should be sent directly to the recipient's inbox
-3. Both inbox and outbox processing use RabbitMQ for asynchronous handling
-
-The tests are designed to simulate realistic federation scenarios while maintaining reproducible results for consistent performance monitoring.
