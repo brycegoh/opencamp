@@ -1,0 +1,106 @@
+[
+  {
+    "name": "inbox-load-test",
+    "success": true,
+    "metrics": {
+      "success_rate": 1,
+      "inbox_requests": 1,
+      "iterations": 2025,
+      "iteration_rate": 1,
+      "inbox_latency_p95": 0,
+      "outbox_latency_p95": 0,
+      "http_req_duration_p95": 0
+    },
+    "comparison": {
+      "passed": true,
+      "results": [
+        {
+          "metric": "success_rate",
+          "value": 1,
+          "threshold": 0.95,
+          "passed": true
+        },
+        {
+          "metric": "inbox_latency_p95",
+          "value": 0,
+          "threshold": 500,
+          "passed": true
+        },
+        {
+          "metric": "http_req_duration_p95",
+          "value": 0,
+          "threshold": 500,
+          "passed": true
+        }
+      ]
+    },
+    "resultFile": "/Users/brycegoh/Desktop/opencamp/project/tests/k6/results/inbox-load-test-result.json"
+  },
+  {
+    "name": "outbox-load-test",
+    "success": true,
+    "metrics": {
+      "success_rate": 1,
+      "outbox_requests": 1,
+      "iterations": 1928,
+      "iteration_rate": 1,
+      "inbox_latency_p95": 0,
+      "outbox_latency_p95": 0,
+      "http_req_duration_p95": 0
+    },
+    "comparison": {
+      "passed": true,
+      "results": [
+        {
+          "metric": "success_rate",
+          "value": 1,
+          "threshold": 0.95,
+          "passed": true
+        },
+        {
+          "metric": "outbox_latency_p95",
+          "value": 0,
+          "threshold": 500,
+          "passed": true
+        },
+        {
+          "metric": "http_req_duration_p95",
+          "value": 0,
+          "threshold": 500,
+          "passed": true
+        }
+      ]
+    },
+    "resultFile": "/Users/brycegoh/Desktop/opencamp/project/tests/k6/results/outbox-load-test-result.json"
+  },
+  {
+    "name": "inbox-vs-outbox-comparison",
+    "comparison": {
+      "successRate": {
+        "inbox": 1,
+        "outbox": 1,
+        "difference": "0.0000",
+        "notes": []
+      },
+      "latency": {
+        "inbox": 0,
+        "outbox": 0,
+        "difference": "0.00",
+        "notes": []
+      },
+      "throughput": {
+        "inbox": 1,
+        "outbox": 1,
+        "difference": "0.00",
+        "notes": []
+      },
+      "federationAnalysis": {
+        "inboxMeetsRequirements": true,
+        "outboxMeetsRequirements": true,
+        "notes": [
+          "✅ Both inbox and outbox meet federation requirements"
+        ]
+      }
+    }
+  }
+]

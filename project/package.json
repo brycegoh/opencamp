@@ -6,7 +6,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "k6-inbox": "k6 run tests/k6/inbox-load-test.js",
+    "k6-outbox": "k6 run tests/k6/outbox-load-test.js",
+    "k6-compare": "node tests/k6/run-and-compare.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +27,7 @@
     "@types/amqplib": "^0.10.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/k6": "^1.0.2",
     "@types/node": "^22.14.0",
     "@types/node-fetch": "^2.6.12",
     "@types/pg": "^8.11.11",

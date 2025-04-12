@@ -53,7 +53,20 @@ export async function startInboxConsumer() {
       }
       
       // Parse the activity from the JSON stored in the database
-      const activity = inboxItem.activity
+      const activity = inboxItem.activity;
+      
+      // Check if this is a test activity
+      const isTestActivity = activity._test === true;
+      if (isTestActivity) {
+        console.log('Detected test activity - skipping normal processing');
+        // For test activities, just mark as processed and acknowledge
+        if (inboxItemId) {
+          await db.markInboxItemProcessed(inboxItemId);
+          console.log(`Marked test inbox item ${inboxItemId} as processed`);
+        }
+        channel.ack(msg);
+        return;
+      }
       
       console.log('Processing inbox activity:', activity.type);
       console.log('Inbox item ID:', inboxItemId);
@@ -118,6 +131,20 @@ export async function startOutboxConsumer() {
       
       // Parse the activity from the JSON stored in the database
       const activity = outboxItem.activity
+
+      // Check if this is a test activity
+      console.log('Checking for test activity:', activity);
+      const isTestActivity = activity._test === true;
+      if (isTestActivity) {
+        console.log('Detected test activity - skipping normal processing');
+        // For test activities, just mark as processed and acknowledge
+        if (outboxItemId) {
+          await db.markOutboxItemProcessed(outboxItemId);
+          console.log(`Marked test outbox item ${outboxItemId} as processed`);
+        }
+        channel.ack(msg);
+        return;
+      }
       
       console.log('Processing outbox activity:', activity.type);
       console.log('Outbox item ID:', outboxItemId);

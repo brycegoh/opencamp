@@ -86,6 +86,7 @@ export const handleInbox = async (req: Request, res: Response) => {
     
     // Store activity in database
     const activity = req.body;
+    
     const inboxItem = await db.addInboxItem(user.id, activity);
     console.log(`Created inbox item with ID: ${inboxItem.id}`);
     
