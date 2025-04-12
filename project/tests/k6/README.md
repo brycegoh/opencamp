@@ -25,8 +25,7 @@ Before running the tests, edit the `config.js` file to match your environment:
 - Adjust the load scenarios based on your system's capacity
 
 ### Load Test Configuration
-
-Both the inbox and outbox tests use a consistent configuration to ensure meaningful comparisons:
+To simulate times of peak activity followed by a cooldown, the tests use a ramping arrival rate executor with the following stages:
 
 ```javascript
 // Common test configuration for both inbox and outbox
